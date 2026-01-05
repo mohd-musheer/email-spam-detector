@@ -37,3 +37,7 @@ def chech_spam(m:DataCheck):
     }))[0]
     output= "SPAM Message" if result ==1 else 'Not Spam Message'
     return JSONResponse(status_code=200,content={'message':output})
+
+@app.get('/health')
+def health():
+    return JSONResponse({'health':'OK'})
