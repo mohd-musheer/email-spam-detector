@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel | AI Spam Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-2xl w-full glass rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
+        <div class="bg-slate-900 p-8 text-white">
+            <div class="flex items-center gap-3 mb-2">
+                <i data-lucide="shield-check" class="text-blue-400 w-8 h-8"></i>
+                <h1 class="text-2xl font-bold tracking-tight">Sentinel AI</h1>
+            </div>
+            <p class="text-slate-400">Advanced NLP-powered spam classification engine.</p>
+        </div>
+
+        <div class="p-8">
+            <div class="mb-6">
+                <label for="emailInput" class="block text-sm font-semibold text-slate-700 mb-2">Email Content</label>
+                <textarea id="emailInput" rows="6" 
+                    class="w-full p-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none text-slate-600"
+                    placeholder="Paste the email text here..."></textarea>
+            </div>
+
+            <button onclick="analyzeEmail()" id="btn"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200">
+                <i data-lucide="search" class="w-5 h-5"></i>
+                Analyze Message
+            </button>
+
+            <div id="resultContainer" class="mt-8 hidden animate-in fade-in duration-500">
+                <div id="resultBox" class="p-6 rounded-2xl border-2 flex items-center gap-4">
+                    <div id="iconBox" class="p-3 rounded-full"></div>
+                    <div>
+                        <h3 id="resultStatus" class="text-lg font-bold"></h3>
+                        <p id="resultText" class="text-sm opacity-90"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-50 p-4 text-center border-t border-slate-200">
+            <p class="text-xs text-slate-400 font-medium tracking-widest uppercase">Powered by Scikit-Learn & FastAPI</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        async function analyzeEmail() {
+            const email = document.getElementById('emailInput').value;
+            const btn = document.getElementById('btn');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultBox = document.getElementById('resultBox');
+            const resultStatus = document.getElementById('resultStatus');
+            const resultText = document.getElementById('resultText');
+            const iconBox = document.getElementById('iconBox');
+
+            if (!email.trim()) {
+                alert("Please enter some text to analyze.");
+                return;
+            }
+
+            // UI Loading State
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin mr-2">⏳</span> Processing...`;
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+
+                const data = await response.json();
+                const isSpam = data.message === "SPAM Message";
+
+                // Update UI based on result
+                resultContainer.classList.remove('hidden');
+                
+                if (isSpam) {
+                    resultBox.className = "p-6 rounded-2xl border-2 flex items-center gap-4 bg-red-50 border-red-200 text-red-800";
+                    iconBox.className = "p-3 rounded-full bg-red-200 text-red-600";
+                    iconBox.innerHTML = `<i data-lucide="alert-triangle"></i>`;
+                    resultStatus.innerText = "Spam Detected";
+                    resultText.innerText = "This message looks suspicious and may be a phishing attempt.";
+                } else {
+                    resultBox.className = "p-6 rounded-2xl border-2 flex items-center gap-4 bg-green-50 border-green-200 text-green-800";
+                    iconBox.className = "p-3 rounded-full bg-green-200 text-green-600";
+                    iconBox.innerHTML = `<i data-lucide="check-circle"></i>`;
+                    resultStatus.innerText = "Safe Message";
+                    resultText.innerText = "This message appears to be legitimate (Not Spam).";
+                }
+
+                lucide.createIcons();
+            } catch (error) {
+                console.error('Error:', error);
+                alert("Failed to connect to the server.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i data-lucide="search" class="w-5 h-5"></i> Analyze Message`;
+            }
+        }
+    </script>
+</body>
+</html>
