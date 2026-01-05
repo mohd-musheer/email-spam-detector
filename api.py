@@ -41,3 +41,5 @@ def chech_spam(m:DataCheck):
 @app.get('/health')
 def health():
     return JSONResponse({'health':'OK'})
+
+
