@@ -76,7 +76,7 @@
             btn.innerHTML = `<span class="animate-spin mr-2">⏳</span> Processing...`;
 
             try {
-                const response = await fetch('/predict', {
+                const response = await fetch('https://email-spam-detector.onrender.com/predict', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email })
