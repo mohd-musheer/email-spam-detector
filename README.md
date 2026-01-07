@@ -6,7 +6,7 @@ A simple and effective **Machine Learning–based Email Spam Detection system** 
 👉 https://email-spam-detector-q81d.onrender.com  
 
 📦 **Docker Image :**  
-👉 
+👉 https://hub.docker.com/repository/docker/mohdmusheer/email-spam-detector
 
 ---
 
