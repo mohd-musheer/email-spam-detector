@@ -3,7 +3,7 @@
 A simple and effective **Machine Learning–based Email Spam Detection system** that classifies emails as **Spam** or **Not Spam** using Natural Language Processing (NLP) with 98.55 % Accuracy
 
 🚀 **Live Demo:**  
-👉 https://email-spam-detector-q81d.onrender.com  
+👉 https://email-spam-detector-3gon.onrender.com
 
 📦 **Docker Image :**  
 👉 https://hub.docker.com/repository/docker/mohdmusheer/email-spam-detector
