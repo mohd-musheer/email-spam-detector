@@ -8,6 +8,16 @@ A simple and effective **Machine Learning–based Email Spam Detection system** 
 📦 **Docker Image :**  
 👉 https://hub.docker.com/repository/docker/mohdmusheer/email-spam-detector
 
+## 🌐 Deployment (Google Cloud)
+
+This project is also deployed using **Google Cloud Run**:
+
+👉 https://resume-ranker-231849808295.us-central1.run.app/
+
+This deployment was done using **Docker + Google Cloud Build + Cloud Run**.
+
+> Note: This link may not always work because the service can be stopped due to limited free-tier resources.
+
 ---
 
 ## 🧠 Project Overview
