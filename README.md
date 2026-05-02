@@ -10,6 +10,10 @@ A simple and effective **Machine Learning–based Email Spam Detection system** 
 
 ## 🌐 Deployment (Google Cloud)
 
+
+
+
+
 This project is also deployed using **Google Cloud Run**:
 
 👉 https://resume-ranker-231849808295.us-central1.run.app/
